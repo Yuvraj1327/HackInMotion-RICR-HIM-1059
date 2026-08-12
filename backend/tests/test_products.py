@@ -118,3 +118,6 @@ def test_user_can_only_access_own_products():
     b_id = b_products[0]["id"]
     assert repo.get_by_id("user-A", b_id) is None
     assert repo.get_by_id("user-B", b_id) is not None
+
+
+    

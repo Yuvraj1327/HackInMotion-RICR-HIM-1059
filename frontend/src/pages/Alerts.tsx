@@ -1,3 +1,6 @@
+
+///alert.tsx
+
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, PartyPopper } from "lucide-react";
@@ -155,3 +158,7 @@ export default function Alerts() {
     </AppShell>
   );
 }
+
+
+
+
