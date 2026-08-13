@@ -1,3 +1,6 @@
+////scenario...tsx
+
+
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FlaskConical, TrendingUp, Truck } from "lucide-react";
