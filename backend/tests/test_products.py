@@ -1,3 +1,6 @@
+#test_products.py
+
+
 import pytest
 from pydantic import ValidationError
 
@@ -120,4 +123,4 @@ def test_user_can_only_access_own_products():
     assert repo.get_by_id("user-B", b_id) is not None
 
 
-    
+
