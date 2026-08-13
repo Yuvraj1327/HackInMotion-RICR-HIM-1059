@@ -2,6 +2,9 @@
 // against the live OpenAPI spec at /openapi.json). Keep in sync if the
 // backend schemas change.
 
+
+
+
 export interface Product {
   id: string;
   user_id: string;

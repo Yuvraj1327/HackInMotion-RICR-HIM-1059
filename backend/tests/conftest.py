@@ -1,3 +1,5 @@
+#conftest.py
+
 import os
 import sys
 
