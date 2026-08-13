@@ -1,3 +1,5 @@
+////setting.tsx
+
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { RotateCcw, Truck, Plus, Trash2, Pencil } from "lucide-react";
