@@ -1,3 +1,5 @@
+#inventory.pyy
+
 """
 Inventory risk engine: turns a product's demand forecast + current stock
 into stockout risk, overstock analysis, and reorder math. Every number
