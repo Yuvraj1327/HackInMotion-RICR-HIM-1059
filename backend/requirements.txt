@@ -5,7 +5,7 @@ pydantic-settings==2.5.2
 python-dotenv==1.0.1
 python-multipart==0.0.9
 supabase==2.7.4
-
+postgrest==0.17.2
 PyJWT==2.9.0
 cryptography==43.0.1
 

@@ -15,7 +15,9 @@ from app.core.dependencies import (
 from app.database.repositories.products import ProductRepository
 from app.database.repositories.sales import SalesRepository
 from app.schemas.inventory import ReorderRecommendation
+from app.services.forecast_service import InsufficientDataError, generate_product_forecast
 from app.services.recommendation_service import build_reorder_recommendation, rank_recommendations
+from app.services.sales_series import group_sales_by_product
 
 router = APIRouter(prefix="/recommendations", tags=["Recommendations"])
 
@@ -28,11 +30,23 @@ def get_reorder_recommendations(
     sales_repo: SalesRepository = Depends(get_sales_repository),
 ):
     products = product_repo.list_for_user(user.id)
+    # One request for every product's sales instead of one request per
+    # product - see dashboard.py for the same fix and why it matters.
+    sales_by_product = group_sales_by_product(sales_repo.list_for_user(user.id))
+
     recommendations = []
     for product in products:
-        sales_rows = sales_repo.list_for_product(user.id, product["id"])
+        sales_rows = sales_by_product.get(product["id"], [])
+        # Fit the demand model once per product and reuse it across the
+        # stockout/forecast/reorder-quantity calculations inside
+        # build_reorder_recommendation - see dashboard.py for the same
+        # optimization and why it matters.
         try:
-            rec = build_reorder_recommendation(product, sales_rows)
+            forecast_30d = generate_product_forecast(sales_rows, horizon_days=30)
+        except InsufficientDataError:
+            forecast_30d = None
+        try:
+            rec = build_reorder_recommendation(product, sales_rows, forecast_30d=forecast_30d)
         except Exception:
             continue
         recommendations.append(rec)

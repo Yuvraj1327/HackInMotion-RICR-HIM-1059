@@ -4,9 +4,9 @@ Reorder recommendation engine: combines stockout risk + forecast demand
 """
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from app.services.forecast_service import InsufficientDataError, generate_product_forecast
+from app.services.forecast_service import InsufficientDataError, ProductForecast, generate_product_forecast
 from app.services.inventory_service import compute_reorder_quantity, compute_stockout_prediction
 
 _RISK_ORDER = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3}
@@ -24,17 +24,30 @@ def _build_reason(stockout: Dict[str, Any], forecast_7: float, current_stock: fl
 
 
 def build_reorder_recommendation(
-    product: Dict[str, Any], sales_rows: List[Dict[str, Any]]
+    product: Dict[str, Any],
+    sales_rows: List[Dict[str, Any]],
+    forecast_30d: Optional[ProductForecast] = None,
 ) -> Dict[str, Any]:
-    stockout = compute_stockout_prediction(product, sales_rows)
+    """
+    `forecast_30d`: an already-computed 30-day forecast for this product,
+    if the caller has one on hand (e.g. the dashboard, which computes it
+    once per product and reuses it here instead of re-fitting the model
+    for every calculation). When omitted, this generates its own
+    forecasts exactly as before - existing single-product callers are
+    unaffected.
+    """
+    stockout = compute_stockout_prediction(product, sales_rows, forecast_30d=forecast_30d)
 
-    try:
-        forecast = generate_product_forecast(sales_rows, horizon_days=7)
-        forecast_7 = forecast.total_demand()
-    except InsufficientDataError:
-        forecast_7 = 0.0
+    if forecast_30d is not None:
+        forecast_7 = forecast_30d.total_demand(7)
+    else:
+        try:
+            forecast = generate_product_forecast(sales_rows, horizon_days=7)
+            forecast_7 = forecast.total_demand()
+        except InsufficientDataError:
+            forecast_7 = 0.0
 
-    order_qty = compute_reorder_quantity(product, sales_rows, horizon_days=14)
+    order_qty = compute_reorder_quantity(product, sales_rows, horizon_days=14, forecast_30d=forecast_30d)
 
     return {
         "product_id": product["id"],

@@ -1,6 +1,4 @@
-//useauth.tsx
-
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
@@ -64,25 +62,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
   const queryClient = useQueryClient();
+  // Tracks whose data the cache currently holds, so the listener below
+  // can tell "still the same session" apart from "a different account
+  // just took over this tab" (including a DIFFERENT session replacing
+  // this one without ever calling logout() first - e.g. another browser
+  // tab signing in as someone else, which Supabase's client broadcasts
+  // to every tab sharing the same localStorage).
+  const currentUserIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
+      currentUserIdRef.current = data.session?.user.id ?? null;
       setSession(data.session);
       setIsGuest(!!data.session && readGuestFlag());
       setIsLoading(false);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-      if (!newSession) {
-        // Session ended (e.g. sign-out from another tab) - clear the flag too.
-        writeGuestFlag(false);
-        setIsGuest(false);
+      const newUserId = newSession?.user.id ?? null;
+
+      // This is the SINGLE authoritative place every session transition
+      // passes through - whether it came from login()/signup()/
+      // continueAsGuest()/logout() in this tab, a background token
+      // refresh, or another tab signing in/out as a different account.
+      // Whenever the authenticated user actually changes (including to
+      // or from "nobody"), wipe every cached query result so a
+      // Dashboard/Inventory/etc. that's already mounted can never keep
+      // showing the PREVIOUS account's numbers under the new session -
+      // this is what actually prevents guest <-> real-account data
+      // leakage, rather than relying only on the explicit clears inside
+      // the four auth functions below (which don't cover paths that
+      // bypass them, like cross-tab sync).
+      if (newUserId !== currentUserIdRef.current) {
+        queryClient.clear();
+        setIsGuest(!!newSession && readGuestFlag());
+        if (!newSession) writeGuestFlag(false);
       }
+
+      currentUserIdRef.current = newUserId;
+      setSession(newSession);
     });
 
     return () => listener.subscription.unsubscribe();
-  }, []);
+  }, [queryClient]);
 
   /**
    * Shared by `signup` and `continueAsGuest`: registers via the backend

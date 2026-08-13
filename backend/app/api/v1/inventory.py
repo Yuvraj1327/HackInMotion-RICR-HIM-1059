@@ -18,6 +18,7 @@ from app.database.repositories.products import ProductRepository
 from app.database.repositories.sales import SalesRepository
 from app.schemas.inventory import OverstockAnalysis, StockoutPrediction
 from app.services.inventory_service import compute_overstock_analysis, compute_stockout_prediction
+from app.services.sales_series import group_sales_by_product
 
 router = APIRouter(prefix="/inventory", tags=["Inventory"])
 
@@ -44,9 +45,12 @@ def list_stockout_predictions(
     sales_repo: SalesRepository = Depends(get_sales_repository),
 ):
     products = product_repo.list_for_user(user.id)
+    # One request for every product's sales instead of one request per
+    # product - see dashboard.py for the same fix and why it matters.
+    sales_by_product = group_sales_by_product(sales_repo.list_for_user(user.id))
     results = []
     for product in products:
-        sales_rows = sales_repo.list_for_product(user.id, product["id"])
+        sales_rows = sales_by_product.get(product["id"], [])
         result = compute_stockout_prediction(product, sales_rows)
         results.append({"product_id": product["id"], "product_name": product["name"], **result})
     return results
@@ -74,9 +78,12 @@ def list_overstock_analyses(
     sales_repo: SalesRepository = Depends(get_sales_repository),
 ):
     products = product_repo.list_for_user(user.id)
+    # One request for every product's sales instead of one request per
+    # product - see dashboard.py for the same fix and why it matters.
+    sales_by_product = group_sales_by_product(sales_repo.list_for_user(user.id))
     results = []
     for product in products:
-        sales_rows = sales_repo.list_for_product(user.id, product["id"])
+        sales_rows = sales_by_product.get(product["id"], [])
         result = compute_overstock_analysis(product, sales_rows)
         results.append({"product_id": product["id"], "product_name": product["name"], **result})
     return results

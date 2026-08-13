@@ -49,3 +49,22 @@ def recent_window(df: pd.DataFrame, days: int = 14) -> pd.DataFrame:
     if df.empty:
         return df
     return df.tail(days)
+
+
+def group_sales_by_product(sales_rows: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
+    """
+    Groups a flat list of sales rows (as returned by a single
+    `SalesRepository.list_for_user(...)` call covering every product at
+    once) into a dict keyed by `product_id`.
+
+    Used by endpoints that need every product's sales history to compute
+    dashboard/recommendation/alert data (dashboard, recommendations,
+    alerts, inventory list endpoints): fetching once per user and
+    grouping in memory replaces what used to be one separate database
+    round-trip per product (an N+1 query pattern), while producing
+    identical per-product row lists.
+    """
+    grouped: Dict[str, List[Dict[str, Any]]] = {}
+    for row in sales_rows:
+        grouped.setdefault(row["product_id"], []).append(row)
+    return grouped

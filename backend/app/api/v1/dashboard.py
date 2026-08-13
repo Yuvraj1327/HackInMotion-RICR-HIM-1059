@@ -17,6 +17,7 @@ from app.schemas.inventory import DashboardSummary
 from app.services.forecast_service import InsufficientDataError, generate_product_forecast
 from app.services.inventory_service import compute_overstock_analysis, compute_stockout_prediction
 from app.services.recommendation_service import build_reorder_recommendation, rank_recommendations
+from app.services.sales_series import group_sales_by_product
 
 router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
@@ -36,6 +37,15 @@ def get_dashboard_summary(
         float(p.get("current_stock") or 0) * float(p.get("price") or 0) for p in products
     )
 
+    # Fetch every one of this user's sales rows in a SINGLE request and
+    # group them by product in memory, instead of issuing one sales
+    # query per product (an N+1 pattern that turns into N sequential
+    # database round-trips for an N-product catalog). `list_for_user` is
+    # the same generic repository method already used elsewhere in the
+    # codebase (products, suppliers, alerts) - no new API added.
+    all_sales = sales_repo.list_for_user(user.id)
+    sales_by_product = group_sales_by_product(all_sales)
+
     low_stock_count = 0
     stockout_risk_count = 0
     overstock_count = 0
@@ -44,27 +54,40 @@ def get_dashboard_summary(
     recommendations = []
 
     for product in products:
-        sales_rows = sales_repo.list_for_product(user.id, product["id"])
+        sales_rows = sales_by_product.get(product["id"], [])
 
-        stockout = compute_stockout_prediction(product, sales_rows)
+        # Fit the demand model ONCE per product (at the longest horizon
+        # any calculation below needs, 30 days) and reuse that single
+        # result for stockout risk, overstock detection, the 7-day
+        # expected-demand total, and the reorder recommendation - rather
+        # than independently re-fitting the model up to six times per
+        # product, which is what made this endpoint slow for accounts
+        # with enough sales history to trigger the more expensive
+        # candidate models. Model selection doesn't depend on the
+        # requested horizon (only the final prediction step does), so
+        # slicing a 30-day forecast's first 7/14 points is numerically
+        # identical to generating a fresh 7/14-day forecast directly.
+        try:
+            forecast_30d = generate_product_forecast(sales_rows, horizon_days=30)
+        except InsufficientDataError:
+            forecast_30d = None
+
+        stockout = compute_stockout_prediction(product, sales_rows, forecast_30d=forecast_30d)
         if stockout["stockout_risk"] in ("CRITICAL", "HIGH"):
             stockout_risk_count += 1
         elif float(product.get("current_stock") or 0) <= stockout["reorder_point"]:
             low_stock_count += 1
 
-        overstock = compute_overstock_analysis(product, sales_rows)
+        overstock = compute_overstock_analysis(product, sales_rows, forecast_30d=forecast_30d)
         if overstock["overstock"]:
             overstock_count += 1
             capital_locked_total += overstock["capital_locked"]
 
-        try:
-            forecast = generate_product_forecast(sales_rows, horizon_days=7)
-            expected_7_day_demand += forecast.total_demand()
-        except InsufficientDataError:
-            pass
+        if forecast_30d is not None:
+            expected_7_day_demand += forecast_30d.total_demand(7)
 
         try:
-            recommendations.append(build_reorder_recommendation(product, sales_rows))
+            recommendations.append(build_reorder_recommendation(product, sales_rows, forecast_30d=forecast_30d))
         except Exception:
             continue
 

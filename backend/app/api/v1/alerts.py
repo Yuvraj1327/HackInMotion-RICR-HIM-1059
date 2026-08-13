@@ -20,6 +20,7 @@ from app.database.repositories.sales import SalesRepository
 from app.schemas.inventory import AlertResponse
 from app.schemas.common import MessageResponse
 from app.services.alert_service import generate_alerts_for_product
+from app.services.sales_series import group_sales_by_product
 
 router = APIRouter(prefix="/alerts", tags=["Alerts"])
 
@@ -36,8 +37,12 @@ def _refresh_alerts_for_user(
     type for the same product are not duplicated.
     """
     products = product_repo.list_for_user(user.id)
+    # One request for every product's sales instead of one request per
+    # product - see dashboard.py for the same fix and why it matters.
+    sales_by_product = group_sales_by_product(sales_repo.list_for_user(user.id))
+
     for product in products:
-        sales_rows = sales_repo.list_for_product(user.id, product["id"])
+        sales_rows = sales_by_product.get(product["id"], [])
         try:
             new_alerts = generate_alerts_for_product(product, sales_rows)
         except Exception:
