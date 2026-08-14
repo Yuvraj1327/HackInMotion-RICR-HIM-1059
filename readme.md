@@ -1,591 +1,554 @@
-# StockPilot AI
+#StockPilot AI
 
-> **AI-Powered Inventory & Demand Forecasting System**
->
-> Because empty shelves lose sales, and overstocked shelves lose money.
+Inventory Intelligence for Smarter Business DecisionsPredict demand. Prevent stockouts. Reduce excess inventory. Protect cash.
 
-StockPilot AI is a full-stack inventory intelligence platform designed
-for small and mid-sized retailers and e-commerce businesses. It helps
-business owners understand current inventory, analyze historical sales,
-forecast future demand, identify stockout/overstock risks, and make
-smarter reorder decisions.
+StockPilot AI is an AI-powered inventory intelligence platform designed to help businesses make faster, data-driven inventory decisions.
 
-## 🚀 Problem
+It combines inventory data, historical sales, demand forecasting, risk analysis, alerts, and reorder recommendations in one platform.
 
-Retailers often make stocking decisions using guesswork or spreadsheets.
-Ordering too little can cause stockouts and lost sales, while ordering
-too much ties up cash and increases storage or wastage costs.
+🌐 Live Application
 
-StockPilot turns historical sales and inventory data into actionable
-recommendations.
+Resource
 
-## 💡 Solution
+Link
 
-StockPilot provides:
+Frontend
 
--   Secure business-user authentication
--   Product and inventory management
--   Supplier management
--   Historical sales data handling
--   Data-driven demand forecasting
--   Stockout and overstock alerts
--   Automated reorder recommendations
--   Analytics dashboard
--   Demo/Guest Mode for instant hackathon demonstration
--   Persistent PostgreSQL storage through Supabase
+YOUR_VERCEL_FRONTEND_URL
 
-## ✨ Key Features
+Backend API
 
-### 1. Authentication
+YOUR_RENDER_BACKEND_URL
 
--   Secure signup/login
--   Supabase Auth
--   Guest/Demo Mode
--   User-specific data access
--   JWT-based authentication between frontend and FastAPI
+GitHub Repository
 
-### 2. Inventory Management
+YOUR_GITHUB_REPOSITORY_URL
 
-Users can: - Add products - Edit products - Delete products - View stock
-levels - Track price/category/supplier information
+Replace the placeholders above with the final deployment URLs.
 
-### 3. Sales Data
+🎯 Problem
 
-Historical sales can be used as the forecasting input.
+Businesses often manage inventory using spreadsheets, manual calculations, and intuition.
 
-The platform is designed to support: - CSV sales uploads - Demo/sample
-sales data - Persistent sales history
+This can lead to:
 
-### 4. Demand Forecasting
+Stockouts and missed sales
 
-StockPilot analyzes historical sales to estimate future product demand.
+Excess inventory
 
-The forecasting engine is implemented in Python and can use statistical
-forecasting techniques such as Exponential Smoothing depending on the
-available data.
+Capital tied up in slow-moving products
 
-The system is designed to: - Detect recent sales trends - Estimate
-future demand - Generate product-level forecasts - Handle
-limited/insufficient historical data gracefully
+Late identification of inventory risks
 
-### 5. Smart Inventory Alerts
+Difficult demand planning
 
-StockPilot identifies:
+Time-consuming manual analysis
 
-**Stockout Risk** - Current stock may not cover expected future demand.
+💡 Solution
 
-**Overstock Risk** - Current inventory is significantly higher than
-expected demand.
+StockPilot AI turns raw inventory and sales data into clear, actionable insights.
 
-**Reorder Recommendation** - Suggests when a product should be reordered
-and the approximate quantity required.
+Instead of only showing what is happening, it helps answer:
 
-### 6. Analytics Dashboard
+What is likely to happen next, and what should I do about it?
 
-The dashboard provides an at-a-glance view of:
+✨ Core Features
 
--   Total products
--   Inventory status
--   Stockout risks
--   Overstock risks
--   Sales trends
--   Demand forecasts
--   Alerts
--   Reorder recommendations
+📊 Intelligent Dashboard
 
-The goal is to help a business owner make a decision in seconds.
+Total inventory value
 
-## 🏗️ Architecture
+Product count
 
-``` text
-                 ┌──────────────────────┐
-                 │      React UI        │
-                 │  Dashboard / Forms   │
-                 └──────────┬───────────┘
-                            │ REST API
-                            ▼
-                 ┌──────────────────────┐
-                 │      FastAPI         │
-                 │ Auth / Business      │
-                 │ Logic / Forecasting  │
-                 └──────────┬───────────┘
-                            │
-             ┌──────────────┴──────────────┐
-             ▼                             ▼
-   ┌──────────────────┐          ┌──────────────────┐
-   │  Supabase Auth   │          │ Supabase         │
-   │  JWT / Users     │          │ PostgreSQL       │
-   └──────────────────┘          │ Inventory/Sales  │
-                                 │ Forecasts/Alerts  │
-                                 └──────────────────┘
-```
+Stockout risk
 
-## 🛠️ Tech Stack
+Overstock count
 
-### Frontend
+Action Center
 
--   React
--   TypeScript
--   Vite
--   Axios
--   React Query (if enabled in the project)
--   Charting library used by the project
+Recent alerts
 
-### Backend
+Recommended order quantities
 
--   Python
--   FastAPI
--   Uvicorn
--   Pydantic
--   Pandas
--   NumPy
--   Statsmodels
--   JWT authentication
+📦 Inventory Management
 
-### Database & Authentication
+Add products manually
 
--   Supabase
--   PostgreSQL
--   Supabase Auth
--   Row Level Security (RLS)
+Search by product name or SKU
 
-### Forecasting
+Filter by category and status
 
--   Python-based statistical forecasting
--   Exponential Smoothing / Holt-Winters where applicable
--   Rule-based inventory calculations for stockout, overstock and
-    reorder decisions
+Track current stock
 
-## 📁 Project Structure
+Selling price and cost price
 
-``` text
-StockPilot/
+Lead time
+
+Safety stock
+
+Supplier assignment
+
+📈 Sales Data
+
+Upload historical sales using CSV
+
+Manual product entry is supported
+
+CSV is optional
+
+Import validation
+
+Duplicate and invalid-row detection
+
+Historical sales used for forecasting
+
+Supported CSV format:
+
+date,product_id,quantity,price,promotion
+2026-01-01,PRODUCT_ID,12,499,false
+2026-01-02,PRODUCT_ID,15,499,true
+
+🔮 Demand Forecasting
+
+Forecast future product demand
+
+Analyze historical sales patterns
+
+Predict potential stockouts
+
+Detect excess inventory
+
+Support reorder decisions
+
+🚨 Alerts
+
+Stockout alerts
+
+Overstock alerts
+
+Reorder-point alerts
+
+Risk severity levels
+
+Recent inventory issues
+
+💡 Recommendations
+
+Recommended order quantities
+
+Inventory action suggestions
+
+Risk-based prioritization
+
+🚚 Supplier Management
+
+Add and manage suppliers
+
+Lead-time tracking
+
+Reliability information
+
+Supplier assignment to products
+
+🧪 Scenario Simulator
+
+Evaluate inventory scenarios and understand how changes in demand or stock levels may affect business decisions.
+
+🔐 Authentication & Workspaces
+
+Supabase authentication
+
+Private registered-user workspaces
+
+User-specific products, sales, alerts, and inventory data
+
+Guest/Demo experience with sample data
+
+Data isolation: Guest Mode uses demo data. Registered users must only see data belonging to their authenticated account.
+
+🧠 How It Works
+
+                    ┌──────────────────┐
+                    │  User / Guest    │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │ React Frontend   │
+                    │ Vite + TypeScript│
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │   FastAPI API    │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │     Supabase     │
+                    │ PostgreSQL + Auth│
+                    └────────┬─────────┘
+                             │
+                             ▼
+                ┌─────────────────────────┐
+                │ Forecasting & Analysis  │
+                └────────────┬────────────┘
+                             │
+                             ▼
+              ┌──────────────────────────────┐
+              │ Alerts • Forecasts • Actions │
+              │ Recommendations • Dashboard  │
+              └──────────────────────────────┘
+
+🏗️ Architecture
+
+HACK-IN-MOTION-RICR/
+│
 ├── frontend/
 │   ├── src/
 │   ├── public/
 │   ├── package.json
-│   └── ...
+│   ├── vite.config.ts
+│   └── .env.example
 │
 ├── backend/
 │   ├── app/
 │   │   ├── api/
-│   │   ├── database/
+│   │   ├── services/
 │   │   ├── models/
 │   │   ├── schemas/
-│   │   ├── services/
 │   │   └── main.py
+│   ├── tests/
 │   ├── requirements.txt
-│   └── ...
+│   ├── Dockerfile
+│   ├── .env.example
+│   └── supabase_schema.sql
 │
 ├── architecture-diagram.png
-├── api-documentation.md
-├── presentation.pptx
-└── README.md
-```
+├── README.md
+└── ...
 
-## ⚙️ Local Setup
+🛠️ Technology Stack
 
-### Prerequisites
+Layer
 
-Install:
+Technology
 
--   Node.js
--   npm
--   Python 3.11+
--   Supabase account
+Frontend
 
-### 1. Clone Repository
+React, TypeScript, Vite
 
-``` bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd StockPilot
-```
+UI
 
-### 2. Backend Setup
+Tailwind CSS
 
-``` bash
+Backend
+
+Python, FastAPI
+
+API Server
+
+Uvicorn
+
+Database
+
+Supabase / PostgreSQL
+
+Authentication
+
+Supabase Auth
+
+Forecasting
+
+Python / Statsmodels
+
+Frontend Deployment
+
+Vercel
+
+Backend Deployment
+
+Render
+
+🔐 Authentication & Data Flow
+
+Registered User
+
+Login
+  ↓
+Supabase Authentication
+  ↓
+JWT Access Token
+  ↓
+FastAPI
+  ↓
+Authenticated user_id
+  ↓
+User-specific data
+
+Guest Mode
+
+Continue as Guest
+  ↓
+Demo Mode
+  ↓
+Sample inventory + sales data
+  ↓
+Demo dashboard
+
+Demo data and registered-user data are intentionally separated.
+
+⚙️ Local Development
+
+Prerequisites
+
+Python 3.11+
+
+Node.js 18+
+
+npm
+
+Supabase project
+
+1. Clone
+
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd HACK-IN-MOTION-RICR
+
+2. Backend
+
 cd backend
 
 python3 -m venv .venv
 source .venv/bin/activate
 
 pip install -r requirements.txt
-```
 
-Create `backend/.env`:
+Create backend/.env:
 
-``` env
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+SUPABASE_URL=YOUR_SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
+SUPABASE_JWT_SECRET=YOUR_SUPABASE_JWT_SECRET
 
 FRONTEND_URL=http://localhost:5173
-```
+ENVIRONMENT=development
 
-Start FastAPI:
+Start the API:
 
-``` bash
 ./.venv/bin/python -m uvicorn app.main:app --reload --port 8000
-```
 
-Backend:
+API:
 
-``` text
 http://127.0.0.1:8000
-```
 
-API documentation:
+3. Frontend
 
-``` text
-http://127.0.0.1:8000/docs
-```
-
-### 3. Frontend Setup
-
-``` bash
 cd frontend
 npm install
-```
 
-Create `.env`:
+Create frontend/.env:
 
-``` env
 VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
+VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
-Start frontend:
+Start:
 
-``` bash
 npm run dev
-```
 
-Open the Vite URL shown in the terminal.
+Frontend:
 
-## 🗄️ Supabase Database Setup
-
-Create a Supabase project and run the database SQL/migrations included
-with the project.
+http://localhost:5173
 
-The database should contain the tables required by the current backend,
-including the project entities for:
+☁️ Production Deployment
 
--   Profiles
--   Products
--   Suppliers
--   Sales
--   Forecasts
--   Alerts
--   Reorder recommendations
--   Other supporting inventory entities
+Frontend — Vercel
 
-Make sure the schema matches the FastAPI repositories and models.
+Configure:
 
-### Security
+VITE_API_BASE_URL=https://YOUR-RENDER-BACKEND-URL/api/v1
+VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
 
-Row Level Security should ensure that authenticated users can only
-access their own business data.
+After changing Vercel environment variables, trigger a new deployment.
 
-The Supabase Service Role Key must only be used on the backend and must
-never be exposed in the React frontend.
+Backend — Render
 
-## 👤 Guest / Demo Mode
+Configure:
 
-StockPilot includes a Guest Mode specifically for quick product
-demonstrations.
+SUPABASE_URL=YOUR_SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
+SUPABASE_JWT_SECRET=YOUR_SUPABASE_JWT_SECRET
 
-Flow:
+FRONTEND_URL=https://YOUR-VERCEL-FRONTEND-URL
+ENVIRONMENT=production
 
-``` text
-Continue as Guest
-        ↓
-Create/reuse demo session
-        ↓
-Seed realistic demo data
-        ↓
-Generate/load forecasts
-        ↓
-Show dashboard
-        ↓
-Show alerts + reorder recommendations
-```
+Start command:
 
-Guest Mode allows judges to experience the product without creating a
-real business account.
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
 
-Demo data should remain isolated from normal users.
+Keep FRONTEND_URL without a trailing /.
 
-## 📊 Forecasting Approach
+🔒 Environment & Security
 
-StockPilot uses a data-driven forecasting pipeline rather than
-generating random numbers.
+Never commit secrets to GitHub.
 
-The forecasting engine can evaluate historical sales and use statistical
-forecasting such as Exponential Smoothing/Holt-Winters when enough data
-is available.
+Sensitive values include:
 
-A typical flow is:
+SUPABASE_SERVICE_ROLE_KEY
+SUPABASE_JWT_SECRET
 
-``` text
-Historical Sales
-       ↓
-Data Cleaning
-       ↓
-Daily/Product Aggregation
-       ↓
-Trend & Seasonality Analysis
-       ↓
-Forecast Model
-       ↓
-Future Demand
-       ↓
-Inventory Risk Analysis
-       ↓
-Reorder Recommendation
-```
+The frontend should only use the public Supabase anon key.
 
-For products with insufficient historical data, the system should use an
-appropriate fallback strategy instead of producing unreliable forecasts.
+Recommended:
 
-## 🧠 Smart Reorder Logic
+.env
+.env.local
 
-The system combines:
+should remain ignored by Git.
 
--   Current stock
--   Forecasted demand
--   Expected demand horizon
--   Safety stock / buffer
--   Supplier lead time where available
-
-Conceptually:
-
-``` text
-Required Stock
-= Expected Future Demand
-+ Safety Stock
-
-Suggested Reorder
-= Required Stock - Current Stock
-```
-
-The exact implementation follows the backend's inventory/recommendation
-services.
-
-## 🔔 Alerts
-
-Examples:
-
-### High Stockout Risk
-
-``` text
-Wireless Mouse
-Current Stock: 12
-Expected 7-Day Demand: 25
-
-⚠ Reorder recommended
-```
-
-### Overstock Risk
-
-``` text
-Winter Jacket
-Current Stock: 180
-Expected 30-Day Demand: 70
-
-⚠ Overstock detected
-Consider promotion/discounting
-```
-
-## 📥 Sales Data Pipeline
-
-Supported demonstration flow:
-
-``` text
-CSV / Demo Sales Data
-        ↓
-Validation
-        ↓
-Data Cleaning
-        ↓
-Database Storage
-        ↓
-Forecasting Engine
-        ↓
-Forecast Results
-        ↓
-Alerts & Recommendations
-```
-
-Malformed or incomplete uploads should return a clear user-facing error
-instead of breaking the dashboard.
-
-## 🔐 Security
-
-StockPilot follows these principles:
-
--   JWT authentication
--   User-specific authorization
--   Supabase RLS
--   Service-role credentials kept on the backend
--   No hardcoded secrets
--   Explicit CORS configuration
--   Protected API endpoints
--   Input validation
--   Error handling for failed requests
-
-## 🧪 Testing Checklist
-
-Before a demo, verify:
-
-### Backend
-
-``` bash
-./.venv/bin/python -m uvicorn app.main:app --reload --port 8000
-```
-
-Check:
-
-``` text
-GET /
-GET /docs
-```
-
-### Guest Demo
-
-``` text
-Continue as Guest
-→ Demo seed
-→ Dashboard
-→ Products
-→ Sales
-→ Forecasts
-→ Alerts
-→ Reorder Recommendations
-```
-
-### Normal User
-
-``` text
-Signup
-→ Login
-→ Add Product
-→ Add/Upload Sales
-→ Generate Forecast
-→ View Alerts
-→ View Reorder Recommendation
-→ Logout
-```
-
-## 🚀 Deployment
-
-Recommended deployment architecture:
-
-``` text
-React Frontend
-      ↓
-Vercel / Netlify
-      ↓
-FastAPI Backend
-      ↓
-Render / Railway / AWS
-      ↓
-Supabase
-```
-
-Production environment variables must be configured in the deployment
-platforms.
-
-Never commit `.env` files containing real credentials.
-
-## 🎯 Real-World Impact
-
-StockPilot is designed to make demand forecasting accessible to small
-and mid-sized businesses that cannot afford expensive enterprise
-inventory-management systems.
-
-Potential benefits:
-
--   Fewer stockouts
--   Lower excess inventory
--   Better purchasing decisions
--   Reduced working-capital lockup
--   Lower product wastage
--   Faster business decision-making
-
-## 🔮 Future Scope
-
-### Seasonal & Festival Intelligence
-
-Integrate festival calendars and seasonal patterns into forecasting.
-
-### Multi-Location Inventory
-
-Support multiple stores, warehouses and stock transfers.
-
-### Price Optimization
-
-Suggest discounts for slow-moving products.
-
-### Automated Purchase Orders
-
-Generate supplier purchase orders when reorder thresholds are reached.
-
-### What-If Simulation
+📥 Sales CSV Import
 
 Example:
 
-``` text
-"What if demand increases by 20% next month?"
-```
+date,product_id,quantity,price,promotion
+2026-01-01,laptop-001,10,55000,false
+2026-01-02,laptop-001,14,55000,true
+2026-01-03,laptop-001,8,55000,false
+2026-01-04,mouse-001,25,799,false
+2026-01-05,mouse-001,31,799,true
 
-The system can simulate the impact on inventory and reorder
-requirements.
+Important:
 
-### External Signals
+date — sale date
 
-Future versions can incorporate: - Weather - Promotions - Holidays -
-Market trends - Local demand patterns
+product_id — existing product identifier
 
-## 🏆 Hackathon Demo Flow
+quantity — units sold
 
-For the RICR Bhopal hackathon, the recommended live demo is:
+price — selling price
 
-``` text
-1. Open StockPilot
-2. Continue as Guest
-3. Demo data loads
-4. Show dashboard
-5. Pick a high-demand product
-6. Show forecast graph
-7. Show predicted stockout
-8. Show exact reorder recommendation
-9. Show an overstock product
-10. Explain how the business owner can act immediately
-```
+promotion — whether the sale was promotional
 
-The key pitch is:
+The product_id should match a product in the user's inventory.
 
-> **StockPilot doesn't just show inventory numbers --- it predicts what
-> will happen next and tells the business owner what to do.**
+🧪 Testing Checklist
 
-## 👥 Team
+Authentication
 
-**Project:** StockPilot AI\
-**Hackathon:** RICR Bhopal -- HackInMotion
+Signup
 
-Add team member names, GitHub profiles and roles here.
+Login
 
-## 📄 Required Deliverables
+Logout
 
--   `README.md`
--   `architecture-diagram.png`
--   `api-documentation.md`
--   `presentation.pptx`
--   Deployed frontend
--   Deployed backend
--   GitHub repository
+Guest Mode
 
-## 📜 License
+Session restoration
 
-This project was created for the RICR Bhopal hackathon.
+Inventory
+
+Add product
+
+Edit product
+
+Search/filter
+
+Supplier assignment
+
+Sales
+
+Upload valid CSV
+
+Handle invalid CSV
+
+Detect duplicates
+
+View sales history
+
+Intelligence
+
+Dashboard metrics
+
+Demand forecasts
+
+Stockout predictions
+
+Overstock detection
+
+Alerts
+
+Recommendations
+
+Scenario Simulator
+
+Data Isolation
+
+Guest sees demo data
+
+Registered user sees only their own data
+
+Demo data is never automatically seeded into normal accounts
+
+📌 Example Business Scenario
+
+Suppose a store has:
+
+Current Stock:      100 units
+Demand Trend:       Increasing
+Stockout Risk:      High
+Recommended Order:  60 units
+
+StockPilot AI turns this information into a simple decision:
+
+Demand is increasing and inventory may run out soon. Consider ordering 60 additional units.
+
+This helps businesses reduce lost sales while avoiding unnecessary overstock.
+
+🚀 Value Proposition
+
+Without StockPilot AI
+
+Sales Data
+    ↓
+Spreadsheets
+    ↓
+Manual Analysis
+    ↓
+Guesswork
+    ↓
+Late Decisions
+
+With StockPilot AI
+
+Sales + Inventory
+       ↓
+Automated Analysis
+       ↓
+Demand Forecast
+       ↓
+Risk Detection
+       ↓
+Actionable Recommendation
+
+Predict demand → Detect risk → Recommend action → Protect cash.
+
+🏆 Project Information
+
+Project: StockPilot AICategory: AI / Inventory IntelligenceTagline: Inventory IntelligenceFrontend: React + ViteBackend: FastAPIDatabase: SupabaseDeployment: Vercel + Render
+
+🔗 Project Links
+
+Live Application: YOUR_VERCEL_FRONTEND_URL
+
+Backend API: YOUR_RENDER_BACKEND_URL
+
+Source Code: YOUR_GITHUB_REPOSITORY_URL
+
+📄 License
+
+Add the project's preferred license here.
+
+👨‍💻 Development
+
+Built as an AI-powered inventory intelligence platform focused on making demand planning and inventory decisions faster, clearer, and more actionable.
