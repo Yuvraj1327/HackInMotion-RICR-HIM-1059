@@ -45,8 +45,16 @@ export default function Signup() {
     <div className="flex min-h-screen items-center justify-center bg-muted px-4 py-10">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <Link to="/" aria-label="StockPilot AI home" className="mb-2">
-            <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-16 w-auto" />
+          <Link
+            to="/"
+            aria-label="StockPilot AI home"
+            className="mb-2 inline-flex items-center justify-center rounded-xl border border-border bg-white p-4 shadow-sm"
+          >
+            <img
+              src="/assets/logo.png"
+              alt="StockPilot AI — Inventory Intelligence"
+              className="h-12 w-auto max-w-[220px] object-contain"
+            />
           </Link>
           <p className="mt-1 text-sm text-muted-foreground">Predict demand. Prevent stockouts. Protect cash.</p>
         </div>

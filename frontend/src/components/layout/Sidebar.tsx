@@ -31,8 +31,16 @@ export function Sidebar() {
   return (
     <aside className="hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-card lg:flex">
       <div className="flex h-16 items-center border-b border-border px-4">
-        <Link to="/" aria-label="StockPilot AI home" className="flex items-center rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
-          <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-14 w-auto" />
+        <Link
+          to="/"
+          aria-label="StockPilot AI home"
+          className="inline-flex items-center justify-center rounded-lg bg-white p-1.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+        >
+          <img
+            src="/assets/logo.png"
+            alt="StockPilot AI — Inventory Intelligence"
+            className="h-10 w-auto max-w-[190px] object-contain"
+          />
         </Link>
       </div>
 

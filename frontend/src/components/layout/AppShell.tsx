@@ -44,9 +44,13 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
               to="/"
               onClick={() => setMobileOpen(false)}
               aria-label="StockPilot AI home"
-              className="mb-4 flex items-center"
+              className="mb-4 inline-flex items-center rounded-lg bg-white p-1.5"
             >
-              <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-12 w-auto" />
+              <img
+                src="/assets/logo.png"
+                alt="StockPilot AI — Inventory Intelligence"
+                className="h-9 w-auto max-w-[170px] object-contain"
+              />
             </Link>
             <nav className="space-y-1">
               {ALL_NAV_ITEMS.map(({ to, label, icon: Icon }) => (
