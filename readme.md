@@ -1019,4 +1019,4 @@ StockPilot AI was developed as an AI-powered inventory intelligence platform foc
 
 ## StockPilot AI
 
-### **Inventory Intelligence for Smarter Business Decisions**
+### **Inventory Intelligence for Smarter Business Decisions******
