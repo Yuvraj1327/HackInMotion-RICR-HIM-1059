@@ -1,6 +1,6 @@
 # StockPilot AI
 
-> ## Inventory Intelligence for Smarter Business Decisions
+> ## Inventory Intelligence for Smarter Business Decisions*******
 
 **StockPilot AI** is an AI-powered inventory intelligence platform designed to help businesses manage inventory, analyze sales, forecast demand, detect stock risks, and make smarter purchasing decisions.
 
