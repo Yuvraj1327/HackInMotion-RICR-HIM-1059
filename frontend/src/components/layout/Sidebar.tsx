@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -30,14 +30,10 @@ export function Sidebar() {
 
   return (
     <aside className="hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-card lg:flex">
-      <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold text-sm">
-          SP
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold leading-none text-foreground">StockPilot AI</p>
-          <p className="text-[11px] text-muted-foreground">Inventory Intelligence</p>
-        </div>
+      <div className="flex h-16 items-center border-b border-border px-4">
+        <Link to="/" aria-label="StockPilot AI home" className="flex items-center rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary">
+          <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-14 w-auto" />
+        </Link>
       </div>
 
       <nav className="flex-1 space-y-1 overflow-y-auto p-3">

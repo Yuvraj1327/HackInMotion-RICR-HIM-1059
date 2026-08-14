@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Sidebar, MobileBottomNav } from "@/components/layout/Sidebar";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { DemoModeBadge } from "@/components/common/DemoModeBadge";
@@ -40,12 +40,14 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
           <div className="relative z-10 h-full w-72 bg-card p-4">
-            <div className="mb-4 flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-bold text-sm">
-                SP
-              </div>
-              <p className="text-sm font-semibold text-foreground">StockPilot AI</p>
-            </div>
+            <Link
+              to="/"
+              onClick={() => setMobileOpen(false)}
+              aria-label="StockPilot AI home"
+              className="mb-4 flex items-center"
+            >
+              <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-12 w-auto" />
+            </Link>
             <nav className="space-y-1">
               {ALL_NAV_ITEMS.map(({ to, label, icon: Icon }) => (
                 <NavLink

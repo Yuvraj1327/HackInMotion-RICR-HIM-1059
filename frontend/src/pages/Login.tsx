@@ -1,8 +1,6 @@
-////login.tsx
-
 import { useState, type FormEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { PackageSearch, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -61,10 +59,9 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-muted px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <PackageSearch className="h-6 w-6" />
-          </div>
-          <h1 className="text-xl font-semibold text-foreground">StockPilot AI</h1>
+          <Link to="/" aria-label="StockPilot AI home" className="mb-2">
+            <img src="/assets/logo.png" alt="StockPilot AI — Inventory Intelligence" className="h-16 w-auto" />
+          </Link>
           <p className="mt-1 text-sm text-muted-foreground">Predict demand. Prevent stockouts. Protect cash.</p>
         </div>
 
