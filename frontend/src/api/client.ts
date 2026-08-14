@@ -1,5 +1,5 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { supabase } from "@/lib/supabase";
+import { supabase, sessionReady } from "@/lib/supabase";
 import type { ApiErrorBody } from "@/types/api";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL as string | undefined;
@@ -69,7 +69,15 @@ function normalizeError(error: AxiosError<ApiErrorBody>): ApiError {
 }
 
 // --- Attach the current Supabase access token to every request ---
+// Waits for the initial session-restoration promise (see lib/supabase.ts)
+// before ever reading the session - this is a no-op await after the
+// first moment the app has booted (the promise is already settled), but
+// it closes the exact race where a request could otherwise fire before
+// a persisted session has been restored/refreshed, sending no
+// Authorization header and getting a legitimate 401 back for a user who
+// actually does have a valid session.
 apiClient.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  await sessionReady;
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (token) {

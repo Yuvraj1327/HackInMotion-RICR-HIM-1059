@@ -35,8 +35,31 @@ def _refresh_alerts_for_user(
     Recomputes alerts from live data for every product and persists any
     newly-detected condition. Existing unresolved alerts of the same
     type for the same product are not duplicated.
+
+    Robustness against alerts.product_id foreign key violations (Postgres
+    23503): `products` is fetched once at the top, but this loop can take
+    real wall-clock time (forecasting per product), so a product deleted
+    concurrently - by the same user in another tab, a fast double
+    delete-click, etc. - between that fetch and this specific product's
+    turn is a genuine possibility, not just a theoretical one. Two
+    independent guards handle it:
+      1. Any alert rows already orphaned (referencing a product that no
+         longer exists) are cleaned up up front - safe to remove, since
+         a deleted product's alerts are meaningless.
+      2. Each new-alert insert is wrapped so that if the product was
+         deleted in the moment between the fetch above and this
+         particular insert, we skip that one alert instead of raising a
+         raw database error - we never attempt to create a foreign key
+         that isn't valid at insert time.
     """
     products = product_repo.list_for_user(user.id)
+    valid_product_ids = {p["id"] for p in products}
+
+    # Remove any pre-existing alerts pointing at a product that no
+    # longer belongs to this user (or no longer exists at all) before
+    # generating anything new.
+    alert_repo.delete_orphaned(user.id, valid_product_ids)
+
     # One request for every product's sales instead of one request per
     # product - see dashboard.py for the same fix and why it matters.
     sales_by_product = group_sales_by_product(sales_repo.list_for_user(user.id))
@@ -54,7 +77,17 @@ def _refresh_alerts_for_user(
             if existing:
                 continue
             payload = {**alert, "user_id": user.id, "resolved": False}
-            alert_repo.create(payload)
+            try:
+                alert_repo.create(payload)
+            except Exception:
+                # Most likely cause: the product was deleted in the
+                # window between the `list_for_user` call above and this
+                # insert, so `product_id` is no longer a valid foreign
+                # key. Skip this one alert rather than let a database
+                # constraint error surface as a 500 for the whole
+                # request - the next refresh will simply not see that
+                # product anymore.
+                continue
 
 
 @router.get("", response_model=List[AlertResponse])

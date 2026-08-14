@@ -6,7 +6,10 @@
 
 ### Predict Demand. Prevent Stockouts. Reduce Overstock. Protect Cash.
 
----
+##  LOGIN EMAILID- 
+EMAILID-    yuvraj@gmail.com
+PASSWORD-   yuvraj
+
 
 # 🌐 Live Application
 
