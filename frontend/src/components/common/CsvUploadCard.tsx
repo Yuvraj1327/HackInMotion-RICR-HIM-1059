@@ -1,15 +1,16 @@
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { UploadCloud, FileText, CheckCircle2, AlertTriangle } from "lucide-react";
+import { UploadCloud, FileText, CheckCircle2, AlertTriangle, Download } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { uploadSalesCsv } from "@/api/sales";
 import { QUERY_KEYS } from "@/lib/constants";
 import { useToast } from "@/hooks/useToast";
+import { buildSalesCsvTemplate, downloadTextFile } from "@/lib/csvTemplate";
 import { ApiError } from "@/api/client";
-import type { CSVImportResult } from "@/types/api";
+import type { CSVImportResult, Product } from "@/types/api";
 
-export function CsvUploadCard() {
+export function CsvUploadCard({ products }: { products?: Product[] }) {
   const [isDragging, setIsDragging] = useState(false);
   const [result, setResult] = useState<CSVImportResult | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -59,10 +60,33 @@ export function CsvUploadCard() {
     [mutation, toast]
   );
 
+  const handleDownloadTemplate = useCallback(() => {
+    if (!products || products.length === 0) {
+      toast({
+        variant: "error",
+        title: "No products yet",
+        description: "Add a product first (Inventory → Add Product), then download the template.",
+      });
+      return;
+    }
+    downloadTextFile("sales_template.csv", buildSalesCsvTemplate(products));
+    toast({
+      variant: "success",
+      title: "Template downloaded",
+      description: `Filled in with ${products.length} of your own product(s). Open it, type in real quantities, and upload it back here.`,
+    });
+  }, [products, toast]);
+
   return (
     <Card>
       <CardContent className="p-5">
-        <h3 className="mb-1 text-sm font-semibold text-foreground">Upload Historical Sales</h3>
+        <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+          <h3 className="text-sm font-semibold text-foreground">Upload Historical Sales</h3>
+          <Button variant="outline" size="sm" onClick={handleDownloadTemplate}>
+            <Download className="h-3.5 w-3.5" />
+            Download Template (with my products)
+          </Button>
+        </div>
         <p className="mb-4 text-sm text-muted-foreground">
           Accepted format: <code className="rounded bg-muted px-1 py-0.5 text-xs">date,product_id,quantity,price,promotion</code>
         </p>

@@ -1,8 +1,3 @@
-///sales.tsx
-
-
-
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Rocket, Receipt } from "lucide-react";
@@ -48,7 +43,7 @@ export default function Sales() {
           </CardContent>
         </Card>
 
-        <CsvUploadCard />
+        <CsvUploadCard products={productsQuery.data} />
 
         <Card>
           <CardHeader>
