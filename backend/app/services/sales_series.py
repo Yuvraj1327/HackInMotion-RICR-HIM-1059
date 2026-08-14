@@ -1,3 +1,5 @@
+#sales_series.py
+
 """
 Turns raw `sales` rows (irregular, one row per transaction/day) into a
 continuous daily series with one row per calendar day, zero-filled where

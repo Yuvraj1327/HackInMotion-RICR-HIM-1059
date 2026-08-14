@@ -1,3 +1,6 @@
+#scenario_service.py
+
+
 """
 What-if scenario simulator. Re-runs the real forecasting + inventory
 calculations under a modified demand and/or supplier lead-time
