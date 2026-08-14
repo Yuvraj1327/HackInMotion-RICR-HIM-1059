@@ -110,8 +110,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
    * Shared by `signup` and `continueAsGuest`: registers via the backend
    * (creating both the Supabase Auth user and the `profiles` row) and
    * hydrates the Supabase JS client's own session store with the
-   * returned tokens so autoRefreshToken takes over from here exactly as
-   * it would for a client-side signup.
+   * returned tokens.
+   *
+   * Returns the session directly and applies it to React state
+   * synchronously here, rather than waiting for `onAuthStateChange` to
+   * pick it up. Supabase's listener dispatches via a deferred
+   * `setTimeout(0)` (to avoid re-entrancy), so relying on it alone is a
+   * real race: a plain `signInWithPassword` call involves a network
+   * round-trip long enough for that timeout to fire first, but
+   * `setSession()` with tokens already in hand is a purely local
+   * operation that can resolve BEFORE the listener runs. Any caller
+   * that navigates immediately after (e.g. straight to /dashboard)
+   * could hit `ProtectedRoute` while `session` state is still stale and
+   * get bounced back to /login before the listener ever catches up.
    */
   async function registerAndEstablishSession(email: string, password: string, businessName: string) {
     const result = await registerAccount({ email, password, business_name: businessName });
@@ -125,11 +136,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       );
     }
 
-    const { error } = await supabase.auth.setSession({
+    const { data, error } = await supabase.auth.setSession({
       access_token: result.access_token,
       refresh_token: result.refresh_token ?? "",
     });
     if (error) throw new ApiError(error.message, null, "session_error");
+
+    currentUserIdRef.current = data.session?.user.id ?? null;
+    setSession(data.session);
   }
 
   async function signup(email: string, password: string, businessName: string) {
@@ -143,7 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function login(email: string, password: string) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       throw new ApiError(
         error.message === "Invalid login credentials"
@@ -153,6 +167,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         "invalid_credentials"
       );
     }
+    // Applied synchronously - see registerAndEstablishSession's comment
+    // on why this can't wait for onAuthStateChange alone.
+    currentUserIdRef.current = data.session?.user.id ?? null;
+    setSession(data.session);
     writeGuestFlag(false);
     setIsGuest(false);
     // Clear any cached data from a previous session in this tab (e.g. a
@@ -176,11 +194,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new ApiError("Could not start Demo Mode. Please try again.", null, "session_error");
     }
 
-    const { error } = await supabase.auth.setSession({
+    const { data, error } = await supabase.auth.setSession({
       access_token: result.access_token,
       refresh_token: result.refresh_token ?? "",
     });
     if (error) throw new ApiError(error.message, null, "session_error");
+
+    // Applied synchronously and BEFORE returning - this is the fix for
+    // "guest dashboard doesn't show": setSession() here is a purely
+    // local operation (the tokens are already in hand, no network
+    // round-trip), so it can resolve before onAuthStateChange's
+    // deferred listener fires. Without this, the caller's immediate
+    // navigate("/dashboard") could run while `session` React state is
+    // still null, and ProtectedRoute would redirect straight back to
+    // /login before the listener ever catches up.
+    currentUserIdRef.current = data.session?.user.id ?? null;
+    setSession(data.session);
 
     writeGuestFlag(true);
     setIsGuest(true);
