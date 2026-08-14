@@ -1,207 +1,404 @@
-#StockPilot AI
+# StockPilot AI
 
-Inventory Intelligence for Smarter Business DecisionsPredict demand. Prevent stockouts. Reduce excess inventory. Protect cash.
+> ## Inventory Intelligence for Smarter Business Decisions
 
-StockPilot AI is an AI-powered inventory intelligence platform designed to help businesses make faster, data-driven inventory decisions.
+**StockPilot AI** is an AI-powered inventory intelligence platform designed to help businesses manage inventory, analyze sales, forecast demand, detect stock risks, and make smarter purchasing decisions.
 
-It combines inventory data, historical sales, demand forecasting, risk analysis, alerts, and reorder recommendations in one platform.
+### Predict Demand. Prevent Stockouts. Reduce Overstock. Protect Cash.
 
-🌐 Live Application
+---
 
-Resource
+# 🌐 Live Application
 
-Link
+| Resource | Link |
+|---|---|
+| 🌍 Live Website | `https://hack-in-motion-ricr-him-1059.vercel.app` |
+| ⚡ Backend API | `https://hackinmotion-ricr-him-1059-backend.onrender.com/` |
+| 📚 API Documentation | `https://hackinmotion-ricr-him-1059-backend.onrender.com/L/docs` |
+| 💻 GitHub Repository | `https://github.com/Yuvraj1327/HackInMotion-RICR-HIM-1059` |
 
-Frontend
+> Replace the placeholder URLs with your actual deployment links.
 
-YOUR_VERCEL_FRONTEND_URL
+---
 
-Backend API
+# 🎯 Overview
 
-YOUR_RENDER_BACKEND_URL
+Inventory management becomes difficult when businesses rely on spreadsheets, manual calculations, and assumptions.
 
-GitHub Repository
+StockPilot AI provides a centralized platform where businesses can manage inventory and sales data while receiving intelligent insights about future demand and inventory risks.
 
-YOUR_GITHUB_REPOSITORY_URL
+The platform combines:
 
-Replace the placeholders above with the final deployment URLs.
+- Inventory Management
+- Sales Management
+- Demand Forecasting
+- Stockout Prediction
+- Overstock Detection
+- Smart Alerts
+- Reorder Recommendations
+- Supplier Management
+- Scenario Simulation
+- Guest Demo Mode
+- Secure User Authentication
 
-🎯 Problem
+---
 
-Businesses often manage inventory using spreadsheets, manual calculations, and intuition.
+# ❗ Problem
 
-This can lead to:
+Traditional inventory management can create several problems:
 
-Stockouts and missed sales
+- Products go out of stock unexpectedly
+- Businesses purchase more inventory than required
+- Working capital gets locked in excess stock
+- Demand trends are difficult to identify
+- Sales data is underutilized
+- Manual analysis takes significant time
+- Purchasing decisions are often based on guesswork
+- Inventory risks are identified too late
 
-Excess inventory
+---
 
-Capital tied up in slow-moving products
+# 💡 Solution
 
-Late identification of inventory risks
+StockPilot AI converts raw inventory and sales data into actionable insights.
 
-Difficult demand planning
+Instead of simply showing numbers, the platform helps answer:
 
-Time-consuming manual analysis
+```text
+What is happening?
+        ↓
+What is likely to happen next?
+        ↓
+What should the business do?
+```
 
-💡 Solution
+This allows businesses to move from reactive inventory management to proactive, data-driven decision making.
 
-StockPilot AI turns raw inventory and sales data into clear, actionable insights.
+---
 
-Instead of only showing what is happening, it helps answer:
+# ✨ Key Features
 
-What is likely to happen next, and what should I do about it?
+## 📊 Intelligent Dashboard
 
-✨ Core Features
+The dashboard provides a centralized view of inventory health.
 
-📊 Intelligent Dashboard
+### Dashboard Metrics
 
-Total inventory value
+- Total Inventory Value
+- Total Products
+- Stockout Risk
+- Overstock Count
+- Inventory Health
+- Sales Overview
+- Recent Alerts
+- Action Center
+- Reorder Recommendations
+- Demand Insights
 
-Product count
+---
 
-Stockout risk
+## 📦 Inventory Management
 
-Overstock count
+StockPilot AI allows businesses to manage their products and inventory from one place.
 
-Action Center
+### Product Management
 
-Recent alerts
+- Add products manually
+- Edit products
+- Search products
+- Filter products
+- Manage SKU
+- Track stock quantity
+- Track selling price
+- Track cost price
+- Configure lead time
+- Configure safety stock
+- Assign suppliers
+- Monitor inventory status
 
-Recommended order quantities
+### Manual Data Entry
 
-📦 Inventory Management
+Users do not need a CSV file to start using the platform.
 
-Add products manually
+Products and inventory can be entered manually.
 
-Search by product name or SKU
+> **CSV upload is optional.**
 
-Filter by category and status
+---
 
-Track current stock
+# 📈 Sales Management
 
-Selling price and cost price
+Historical sales data can be used to improve demand forecasting.
 
-Lead time
+StockPilot AI supports:
 
-Safety stock
+- Sales history
+- Manual data entry
+- CSV import
+- CSV validation
+- Duplicate detection
+- Invalid-row detection
+- Historical sales analysis
 
-Supplier assignment
+---
 
-📈 Sales Data
+# 📥 CSV Import
 
-Upload historical sales using CSV
+Users can optionally upload historical sales data using CSV.
 
-Manual product entry is supported
+### Example CSV
 
-CSV is optional
-
-Import validation
-
-Duplicate and invalid-row detection
-
-Historical sales used for forecasting
-
-Supported CSV format:
-
+```csv
 date,product_id,quantity,price,promotion
-2026-01-01,PRODUCT_ID,12,499,false
-2026-01-02,PRODUCT_ID,15,499,true
+2026-01-01,laptop-001,10,55000,false
+2026-01-02,laptop-001,14,55000,true
+2026-01-03,laptop-001,8,55000,false
+2026-01-04,mouse-001,25,799,false
+2026-01-05,mouse-001,31,799,true
+```
 
-🔮 Demand Forecasting
+### CSV Fields
 
-Forecast future product demand
+| Field | Description |
+|---|---|
+| `date` | Date of the sale |
+| `product_id` | Existing product identifier |
+| `quantity` | Number of units sold |
+| `price` | Selling price |
+| `promotion` | Whether the sale was promotional |
 
-Analyze historical sales patterns
+---
 
-Predict potential stockouts
+# 🔮 AI Demand Forecasting
 
-Detect excess inventory
+StockPilot AI analyzes historical sales patterns to estimate future demand.
 
-Support reorder decisions
+### Forecasting Capabilities
 
-🚨 Alerts
+- Historical sales analysis
+- Demand trend detection
+- Future demand forecasting
+- Stockout prediction
+- Overstock detection
+- Inventory planning
+- Reorder planning
 
-Stockout alerts
+---
 
-Overstock alerts
+# 🚨 Smart Inventory Alerts
 
-Reorder-point alerts
+StockPilot AI identifies products that require attention.
 
-Risk severity levels
+### Alert Types
 
-Recent inventory issues
+- Stockout Risk
+- Overstock Risk
+- Reorder Required
+- Inventory Warning
+- High-Risk Product
+- Recent Inventory Alert
 
-💡 Recommendations
+---
 
-Recommended order quantities
+# 💡 Reorder Recommendations
 
-Inventory action suggestions
+The platform provides recommended purchasing quantities based on inventory and demand information.
 
-Risk-based prioritization
+### Example
 
-🚚 Supplier Management
+```text
+Current Stock:        100 units
+Average Demand:        18 units/day
+Demand Trend:         Increasing
+Stockout Risk:        High
+Recommended Order:     60 units
+```
 
-Add and manage suppliers
+> Demand is increasing and the product may run out soon. Consider ordering 60 additional units.
 
-Lead-time tracking
+---
 
-Reliability information
+# 🚚 Supplier Management
 
-Supplier assignment to products
+Businesses can manage suppliers and connect them with products.
 
-🧪 Scenario Simulator
+### Supplier Features
 
-Evaluate inventory scenarios and understand how changes in demand or stock levels may affect business decisions.
+- Add suppliers
+- Edit suppliers
+- Supplier contact information
+- Track lead time
+- Track reliability
+- Assign suppliers to products
+- View supplier information
 
-🔐 Authentication & Workspaces
+---
 
-Supabase authentication
+# 🧪 Scenario Simulator
 
-Private registered-user workspaces
+The Scenario Simulator allows users to test different inventory situations.
 
-User-specific products, sales, alerts, and inventory data
+Users can experiment with:
 
-Guest/Demo experience with sample data
+- Demand changes
+- Stock changes
+- Sales volume
+- Reorder quantities
 
-Data isolation: Guest Mode uses demo data. Registered users must only see data belonging to their authenticated account.
+---
 
-🧠 How It Works
+# 👻 Guest Mode
 
+StockPilot AI includes a dedicated Guest Mode for instant product demonstration.
+
+Guest users can explore the platform using sample inventory and sales data without creating a business account.
+
+### Guest Flow
+
+```text
+Continue as Guest
+        ↓
+Demo Account
+        ↓
+Demo Products + Sales
+        ↓
+Demo Dashboard
+        ↓
+Explore StockPilot AI
+```
+
+---
+
+# 🔐 Authentication
+
+StockPilot AI uses Supabase Authentication for secure account management.
+
+### Supported Authentication
+
+- Signup
+- Login
+- Logout
+- Session Restoration
+- JWT Authentication
+- Guest Mode
+- Private User Workspace
+
+---
+
+# 🔒 Data Isolation
+
+## Guest Account
+
+```text
+Guest
+  ↓
+Demo Account
+  ↓
+Demo Data
+```
+
+## Registered Account
+
+```text
+Registered User
+  ↓
+Authenticated Account
+  ↓
+User ID
+  ↓
+Own Products
+  ↓
+Own Sales
+  ↓
+Own Suppliers
+  ↓
+Own Alerts
+  ↓
+Own Inventory
+```
+
+### Important Rule
+
+**Real registered accounts must NEVER automatically receive demo or seed data.**
+
+Every registered user should only see data associated with their authenticated account.
+
+---
+
+# 🧠 System Architecture
+
+```text
                     ┌──────────────────┐
-                    │  User / Guest    │
+                    │   User / Guest   │
                     └────────┬─────────┘
                              │
                              ▼
                     ┌──────────────────┐
                     │ React Frontend   │
-                    │ Vite + TypeScript│
+                    │ TypeScript/Vite  │
+                    └────────┬─────────┘
+                             │
+                         REST API
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │ FastAPI Backend  │
                     └────────┬─────────┘
                              │
                              ▼
                     ┌──────────────────┐
-                    │   FastAPI API    │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │     Supabase     │
+                    │    Supabase      │
                     │ PostgreSQL + Auth│
                     └────────┬─────────┘
                              │
                              ▼
-                ┌─────────────────────────┐
-                │ Forecasting & Analysis  │
-                └────────────┬────────────┘
-                             │
-                             ▼
-              ┌──────────────────────────────┐
-              │ Alerts • Forecasts • Actions │
-              │ Recommendations • Dashboard  │
-              └──────────────────────────────┘
+              ┌────────────────────────────┐
+              │ Forecasting & Inventory    │
+              │ Analysis Services          │
+              └─────────────┬──────────────┘
+                            │
+                            ▼
+             ┌─────────────────────────────┐
+             │ Dashboard • Alerts          │
+             │ Forecasts • Recommendations │
+             └─────────────────────────────┘
+```
 
-🏗️ Architecture
+---
 
+# 🔄 Application Flow
+
+```text
+User Login / Guest
+        ↓
+Authentication
+        ↓
+JWT Session
+        ↓
+Frontend API Request
+        ↓
+FastAPI Backend
+        ↓
+User Authentication
+        ↓
+Supabase PostgreSQL
+        ↓
+Inventory + Sales Data
+        ↓
+Forecasting
+        ↓
+Risk Analysis
+        ↓
+Alerts + Recommendations
+        ↓
+Dashboard
+```
+
+---
+
+# 🏗️ Project Structure
+
+```text
 HACK-IN-MOTION-RICR/
 │
 ├── frontend/
@@ -218,309 +415,303 @@ HACK-IN-MOTION-RICR/
 │   │   ├── models/
 │   │   ├── schemas/
 │   │   └── main.py
+│   │
 │   ├── tests/
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   ├── .env.example
 │   └── supabase_schema.sql
 │
-├── architecture-diagram.png
 ├── README.md
 └── ...
+```
 
-🛠️ Technology Stack
+---
 
-Layer
+# 🛠️ Technology Stack
 
-Technology
+| Category | Technology |
+|---|---|
+| Frontend | React |
+| Language | TypeScript |
+| Build Tool | Vite |
+| Styling | Tailwind CSS |
+| Backend | Python |
+| API Framework | FastAPI |
+| API Server | Uvicorn |
+| Database | PostgreSQL |
+| Backend Platform | Supabase |
+| Authentication | Supabase Auth |
+| Forecasting | Statsmodels |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
 
-Frontend
+---
 
-React, TypeScript, Vite
+# ⚙️ Local Development
 
-UI
+## Prerequisites
 
-Tailwind CSS
+- Python 3.11+
+- Node.js 18+
+- npm
+- Git
+- Supabase Project
 
-Backend
+## Backend
 
-Python, FastAPI
-
-API Server
-
-Uvicorn
-
-Database
-
-Supabase / PostgreSQL
-
-Authentication
-
-Supabase Auth
-
-Forecasting
-
-Python / Statsmodels
-
-Frontend Deployment
-
-Vercel
-
-Backend Deployment
-
-Render
-
-🔐 Authentication & Data Flow
-
-Registered User
-
-Login
-  ↓
-Supabase Authentication
-  ↓
-JWT Access Token
-  ↓
-FastAPI
-  ↓
-Authenticated user_id
-  ↓
-User-specific data
-
-Guest Mode
-
-Continue as Guest
-  ↓
-Demo Mode
-  ↓
-Sample inventory + sales data
-  ↓
-Demo dashboard
-
-Demo data and registered-user data are intentionally separated.
-
-⚙️ Local Development
-
-Prerequisites
-
-Python 3.11+
-
-Node.js 18+
-
-npm
-
-Supabase project
-
-1. Clone
-
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd HACK-IN-MOTION-RICR
-
-2. Backend
-
+```bash
 cd backend
-
 python3 -m venv .venv
 source .venv/bin/activate
-
 pip install -r requirements.txt
-
-Create backend/.env:
-
-SUPABASE_URL=YOUR_SUPABASE_URL
-SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
-SUPABASE_JWT_SECRET=YOUR_SUPABASE_JWT_SECRET
-
-FRONTEND_URL=http://localhost:5173
-ENVIRONMENT=development
-
-Start the API:
-
 ./.venv/bin/python -m uvicorn app.main:app --reload --port 8000
+```
 
-API:
+Backend: `http://127.0.0.1:8000`
 
-http://127.0.0.1:8000
+Swagger: `http://127.0.0.1:8000/docs`
 
-3. Frontend
+## Frontend
 
+```bash
 cd frontend
 npm install
+npm run dev
+```
 
-Create frontend/.env:
+Frontend: `http://localhost:5173`
 
+---
+
+# 🔑 Environment Variables
+
+## Frontend
+
+```env
 VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
 VITE_SUPABASE_URL=YOUR_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
 
-Start:
+## Backend
 
-npm run dev
-
-Frontend:
-
-http://localhost:5173
-
-☁️ Production Deployment
-
-Frontend — Vercel
-
-Configure:
-
-VITE_API_BASE_URL=https://YOUR-RENDER-BACKEND-URL/api/v1
-VITE_SUPABASE_URL=YOUR_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
-
-After changing Vercel environment variables, trigger a new deployment.
-
-Backend — Render
-
-Configure:
-
+```env
 SUPABASE_URL=YOUR_SUPABASE_URL
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
 SUPABASE_JWT_SECRET=YOUR_SUPABASE_JWT_SECRET
+FRONTEND_URL=http://localhost:5173
+ENVIRONMENT=development
+```
 
-FRONTEND_URL=https://YOUR-VERCEL-FRONTEND-URL
-ENVIRONMENT=production
+---
 
-Start command:
+# ☁️ Production Deployment
 
+```text
+Frontend → Vercel
+Backend  → Render
+Database → Supabase
+Auth     → Supabase Auth
+```
+
+### Render Start Command
+
+```bash
 uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
 
-Keep FRONTEND_URL without a trailing /.
+> Keep `FRONTEND_URL` without a trailing `/`.
 
-🔒 Environment & Security
+---
 
-Never commit secrets to GitHub.
+# 🔒 Security
 
-Sensitive values include:
+Never commit private credentials to GitHub.
 
+Sensitive variables include:
+
+```text
 SUPABASE_SERVICE_ROLE_KEY
 SUPABASE_JWT_SECRET
+```
 
-The frontend should only use the public Supabase anon key.
+Never expose these in frontend code or browser environments.
 
-Recommended:
+Recommended `.gitignore`:
 
+```text
 .env
 .env.local
+.env.*.local
+```
 
-should remain ignored by Git.
+---
 
-📥 Sales CSV Import
+# 📡 API
 
-Example:
+The FastAPI backend provides REST APIs for:
 
+- Authentication
+- Products
+- Sales
+- Suppliers
+- Inventory
+- Forecasting
+- Alerts
+- Recommendations
+- Dashboard
+- Guest/Demo functionality
+
+### Production API
+
+`https://github.com/Yuvraj1327/HackInMotion-RICR-HIM-1059`
+
+### Swagger
+
+`https://github.com/Yuvraj1327/HackInMotion-RICR-HIM-1059L/docs`
+
+---
+
+# 📥 Sales CSV Example
+
+```csv
 date,product_id,quantity,price,promotion
 2026-01-01,laptop-001,10,55000,false
 2026-01-02,laptop-001,14,55000,true
 2026-01-03,laptop-001,8,55000,false
 2026-01-04,mouse-001,25,799,false
 2026-01-05,mouse-001,31,799,true
+```
 
-Important:
+| Field | Meaning |
+|---|---|
+| `date` | Sale date |
+| `product_id` | Existing product identifier |
+| `quantity` | Units sold |
+| `price` | Selling price |
+| `promotion` | Promotional sale status |
 
-date — sale date
+> CSV upload is optional. Sales can also be entered manually.
 
-product_id — existing product identifier
+---
 
-quantity — units sold
+# 🧪 Testing Checklist
 
-price — selling price
+## Authentication
 
-promotion — whether the sale was promotional
+- [ ] Signup
+- [ ] Login
+- [ ] Logout
+- [ ] Guest Mode
+- [ ] Session restoration
+- [ ] JWT authentication
+- [ ] Token refresh
+- [ ] Expired-session handling
 
-The product_id should match a product in the user's inventory.
+## Dashboard
 
-🧪 Testing Checklist
+- [ ] Dashboard loads correctly
+- [ ] No infinite skeleton/loading
+- [ ] Inventory metrics are correct
+- [ ] Sales metrics are correct
+- [ ] Alerts load correctly
+- [ ] Recommendations load correctly
+- [ ] Loading states work
+- [ ] Error states work
+- [ ] Empty states work
 
-Authentication
+## Inventory
 
-Signup
+- [ ] Add product
+- [ ] Edit product
+- [ ] Delete product
+- [ ] Search product
+- [ ] Filter products
+- [ ] Update stock
+- [ ] Assign supplier
 
-Login
+## Sales
 
-Logout
+- [ ] Add sales
+- [ ] Upload CSV
+- [ ] Validate CSV
+- [ ] Handle invalid rows
+- [ ] Detect duplicates
+- [ ] View sales history
+- [ ] Verify user ownership
 
-Guest Mode
+## AI
 
-Session restoration
+- [ ] Demand forecast
+- [ ] Stockout prediction
+- [ ] Overstock analysis
+- [ ] Reorder recommendations
+- [ ] Scenario Simulator
 
-Inventory
+## Data Isolation
 
-Add product
+- [ ] Guest receives demo data
+- [ ] Guest receives demo alerts
+- [ ] Real user receives only private data
+- [ ] Real user never receives demo/seed data automatically
+- [ ] User A cannot access User B data
 
-Edit product
+---
 
-Search/filter
+# 📊 Example Business Scenario
 
-Supplier assignment
+```text
+Current Stock:        100 units
+Average Demand:        18 units/day
+Demand Trend:         Increasing
+Stockout Risk:        High
+Recommended Order:     60 units
+```
 
-Sales
+StockPilot AI turns this into an actionable recommendation:
 
-Upload valid CSV
+> **Demand is increasing and the product may run out soon. Consider ordering 60 additional units.**
 
-Handle invalid CSV
+---
 
-Detect duplicates
+# 💼 Business Value
 
-View sales history
+StockPilot AI can help businesses:
 
-Intelligence
+- Reduce stockouts
+- Reduce excess inventory
+- Improve demand planning
+- Save working capital
+- Reduce manual work
+- Identify risks earlier
+- Improve purchasing decisions
+- Improve inventory visibility
+- Make data-driven decisions
 
-Dashboard metrics
+---
 
-Demand forecasts
+# 🔄 Traditional vs StockPilot AI
 
-Stockout predictions
+## Traditional Process
 
-Overstock detection
-
-Alerts
-
-Recommendations
-
-Scenario Simulator
-
-Data Isolation
-
-Guest sees demo data
-
-Registered user sees only their own data
-
-Demo data is never automatically seeded into normal accounts
-
-📌 Example Business Scenario
-
-Suppose a store has:
-
-Current Stock:      100 units
-Demand Trend:       Increasing
-Stockout Risk:      High
-Recommended Order:  60 units
-
-StockPilot AI turns this information into a simple decision:
-
-Demand is increasing and inventory may run out soon. Consider ordering 60 additional units.
-
-This helps businesses reduce lost sales while avoiding unnecessary overstock.
-
-🚀 Value Proposition
-
-Without StockPilot AI
-
+```text
 Sales Data
     ↓
-Spreadsheets
+Spreadsheet
+    ↓
+Manual Calculations
     ↓
 Manual Analysis
     ↓
 Guesswork
     ↓
-Late Decisions
+Delayed Decision
+```
 
-With StockPilot AI
+## StockPilot AI
 
+```text
 Sales + Inventory
        ↓
 Automated Analysis
@@ -529,26 +720,303 @@ Demand Forecast
        ↓
 Risk Detection
        ↓
-Actionable Recommendation
+Smart Alert
+       ↓
+Reorder Recommendation
+       ↓
+Business Action
+```
 
-Predict demand → Detect risk → Recommend action → Protect cash.
+---
 
-🏆 Project Information
+# 🎯 Target Users
 
-Project: StockPilot AICategory: AI / Inventory IntelligenceTagline: Inventory IntelligenceFrontend: React + ViteBackend: FastAPIDatabase: SupabaseDeployment: Vercel + Render
+StockPilot AI can be useful for:
 
-🔗 Project Links
+- Retail Shops
+- Supermarkets
+- Small Businesses
+- Wholesalers
+- Distributors
+- E-commerce Sellers
+- Local Stores
+- Inventory-Based Businesses
 
-Live Application: YOUR_VERCEL_FRONTEND_URL
+---
 
-Backend API: YOUR_RENDER_BACKEND_URL
+# 🏪 Real-World Use Case
 
-Source Code: YOUR_GITHUB_REPOSITORY_URL
+A shop owner manages hundreds of products.
 
-📄 License
+Instead of manually checking spreadsheets every day:
 
-Add the project's preferred license here.
+```text
+Add Products
+      ↓
+Add Sales
+      ↓
+Upload Historical CSV (Optional)
+      ↓
+StockPilot Analyzes Data
+      ↓
+Demand Forecast
+      ↓
+Risk Detection
+      ↓
+Alerts
+      ↓
+Reorder Recommendations
+      ↓
+Business Decision
+```
 
-👨‍💻 Development
+---
 
-Built as an AI-powered inventory intelligence platform focused on making demand planning and inventory decisions faster, clearer, and more actionable.
+# 💰 Business Impact
+
+StockPilot AI focuses on two major inventory problems:
+
+```text
+Too Little Inventory
+        ↓
+Stockout
+        ↓
+Lost Sales
+```
+
+and:
+
+```text
+Too Much Inventory
+        ↓
+Overstock
+        ↓
+Capital Locked
+```
+
+The goal is to help businesses maintain a healthier inventory balance.
+
+---
+
+# 📌 Core Product Philosophy
+
+```text
+Understand
+    ↓
+Predict
+    ↓
+Detect
+    ↓
+Recommend
+    ↓
+Act
+```
+
+---
+
+# 🧩 Main Modules
+
+| Module | Purpose |
+|---|---|
+| Dashboard | Business overview |
+| Inventory | Product and stock management |
+| Sales | Sales history and import |
+| Forecasting | Future demand estimation |
+| Alerts | Inventory risk notifications |
+| Recommendations | Suggested inventory actions |
+| Suppliers | Supplier management |
+| Simulator | Scenario analysis |
+| Authentication | User access and security |
+| Guest Mode | Product demonstration |
+
+---
+
+# 🔄 Data Flow
+
+```text
+Product Data
+     +
+Sales Data
+     +
+Supplier Data
+     ↓
+Supabase PostgreSQL
+     ↓
+FastAPI Services
+     ↓
+Forecasting
+     ↓
+Inventory Analysis
+     ↓
+Risk Detection
+     ↓
+Recommendations
+     ↓
+Frontend Dashboard
+```
+
+---
+
+# ⚡ Performance
+
+The dashboard should avoid unnecessary API requests.
+
+Performance considerations include:
+
+- Reusing dashboard summary APIs
+- Avoiding unnecessary sequential requests
+- Batching data where possible
+- Loading independent data concurrently
+- Preventing duplicate requests
+- Avoiding repeated authentication calls
+
+---
+
+# 🔁 Error Handling
+
+The application should properly handle:
+
+- Network errors
+- Authentication errors
+- Expired tokens
+- Invalid data
+- Empty datasets
+- API errors
+- Database errors
+- CSV validation errors
+
+Users should receive a useful error state instead of being left on an infinite loading screen.
+
+---
+
+# 🟢 Production Checklist
+
+- [ ] Frontend deployed on Vercel
+- [ ] Backend deployed on Render
+- [ ] Supabase configured
+- [ ] Environment variables configured
+- [ ] CORS configured
+- [ ] Authentication tested
+- [ ] Guest Mode tested
+- [ ] Real account tested
+- [ ] Data isolation verified
+- [ ] Dashboard tested
+- [ ] CSV import tested
+- [ ] Forecasting tested
+- [ ] Alerts tested
+- [ ] Recommendations tested
+- [ ] API documentation available
+- [ ] Secrets removed from source code
+- [ ] Production URLs configured
+
+---
+
+
+
+# 🏆 Project Information
+
+| Property | Details |
+|---|---|
+| Project Name | StockPilot AI |
+| Tagline | Inventory Intelligence |
+| Category | AI / Inventory Management |
+| Frontend | React + TypeScript + Vite |
+| Backend | FastAPI + Python |
+| Database | Supabase PostgreSQL |
+| Authentication | Supabase Auth |
+| Forecasting | Statsmodels |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
+
+---
+
+# 🎓 Project Objective
+
+The objective of StockPilot AI is to make inventory management more intelligent and accessible for small and medium-sized businesses.
+
+Instead of requiring complex enterprise software or manual spreadsheets, StockPilot AI provides a simple interface for:
+
+```text
+Manage Inventory
+       ↓
+Analyze Sales
+       ↓
+Forecast Demand
+       ↓
+Identify Risks
+       ↓
+Get Recommendations
+       ↓
+Make Better Decisions
+```
+
+---
+
+# 🌟 Why StockPilot AI?
+
+Traditional inventory systems often tell businesses what their inventory looks like today.
+
+StockPilot AI focuses on helping businesses understand what may happen next.
+
+```text
+Traditional System
+        ↓
+Current Status
+
+StockPilot AI
+        ↓
+Current Status
+        +
+Future Demand
+        +
+Risk
+        +
+Recommended Action
+```
+
+---
+
+# 🚀 Key Value Proposition
+
+```text
+Predict Demand
+      ↓
+Detect Inventory Risk
+      ↓
+Recommend Action
+      ↓
+Protect Cash
+```
+
+> **StockPilot AI turns inventory data into smarter business decisions.**
+
+---
+
+# 🏁 Conclusion
+
+StockPilot AI provides a complete inventory intelligence workflow for businesses that want better visibility and smarter purchasing decisions.
+
+From manually adding products to uploading historical sales, forecasting demand, detecting inventory risks, and receiving reorder recommendations, the platform brings the complete workflow into one system.
+
+### StockPilot AI
+
+> **Inventory Intelligence — Smarter Stock. Smarter Decisions.**
+
+---
+
+
+# 📄 License
+
+This project is developed for demonstration, learning, hackathon, and potential business use.
+
+Add the preferred open-source or proprietary license here.
+
+---
+
+# 👨‍💻 Development
+
+StockPilot AI was developed as an AI-powered inventory intelligence platform focused on helping businesses understand inventory, analyze sales, forecast demand, identify risks, and make better purchasing decisions.
+
+## StockPilot AI
+
+### **Inventory Intelligence for Smarter Business Decisions**
