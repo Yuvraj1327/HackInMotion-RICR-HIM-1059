@@ -12,9 +12,6 @@ call protected endpoints) without also standing up the frontend first.
 signup/login form would use. `/guest` is different on purpose - see its
 docstring below.
 """
-import secrets
-import string
-
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, EmailStr
 
@@ -113,8 +110,8 @@ def guest_session():
     `/register` uses). Supabase's public sign-up flow sends a
     confirmation email and is subject to an aggressive per-project email
     rate limit - fine for real users signing up occasionally, but a
-    guest button that a judge might click several times in a demo would
-    quickly trip "email rate limit exceeded" and break the feature.
+    guest button clicked a few times during a demo would quickly trip
+    "email rate limit exceeded" and break the feature.
 
     It also reuses a SINGLE well-known guest account across every guest
     session, rather than provisioning a brand new Supabase user on each
@@ -123,11 +120,23 @@ def guest_session():
     exists we reuse that same user id, otherwise we create it once via
     the Supabase Auth **admin** API (`auth.admin`, service-role only,
     `email_confirm=True`) - never through the rate-limited public
-    sign-up flow. Either way, a fresh random password is generated for
-    THIS request only, set via the admin API, and immediately used to
-    sign in - the password is never stored, logged, or reused, so
-    nothing here hardcodes a secret; it just avoids proliferating guest
-    accounts in `auth.users` on every click.
+    sign-up flow.
+
+    Getting a session for that shared account is done via
+    `auth.admin.generate_link(type="magiclink")` + `verify_otp(...)` -
+    deliberately NOT "reset the account's password, then sign in with
+    it" (an earlier version of this endpoint did exactly that, and it
+    had a real production bug: two guest logins arriving close together
+    - e.g. from two different browsers/devices, which is completely
+    normal for a shared demo account - could interleave, so browser A's
+    password reset gets immediately overwritten by browser B's before A
+    manages to sign in with it, and A's sign-in fails with invalid
+    credentials). The account never has a password at all now, so there
+    is no shared mutable secret for concurrent requests to race on, and
+    nothing here resembles a password sign-in attempt that Supabase's
+    own abuse-detection might flag when the same account authenticates
+    from many different IPs in a short window - `generate_link` never
+    sends an email either, we only ever read its returned token.
 
     The resulting session is a completely ordinary Supabase Auth
     session: real row in `auth.users`, real `profiles` row, and a real
@@ -154,22 +163,13 @@ def guest_session():
     except Exception as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=f"Could not start guest session: {exc}")
 
-    new_password = "".join(secrets.choice(string.ascii_letters + string.digits) for _ in range(24))
-
     if existing_rows:
         user_id = existing_rows[0]["id"]
-        try:
-            service_client.auth.admin.update_user_by_id(user_id, {"password": new_password})
-        except Exception as exc:
-            raise HTTPException(
-                status_code=status.HTTP_502_BAD_GATEWAY, detail=f"Could not start guest session: {exc}"
-            )
     else:
         try:
             admin_result = service_client.auth.admin.create_user(
                 {
                     "email": GUEST_EMAIL,
-                    "password": new_password,
                     "email_confirm": True,
                     "user_metadata": {"guest": True},
                 }
@@ -196,20 +196,30 @@ def guest_session():
                 status_code=status.HTTP_502_BAD_GATEWAY, detail=f"Could not start guest session: {exc}"
             )
 
-    # Sign in with the freshly-set password to obtain a real session.
-    # Password sign-in is not subject to the sign-up email rate limit.
-    anon_client = get_anon_client()
+    # Generate a one-time verification token for the guest account and
+    # immediately redeem it for a session - see the docstring above for
+    # why this replaced a password-reset-then-sign-in sequence.
     try:
-        result = anon_client.auth.sign_in_with_password({"email": GUEST_EMAIL, "password": new_password})
+        link_result = service_client.auth.admin.generate_link(
+            {"type": "magiclink", "email": GUEST_EMAIL}
+        )
     except Exception as exc:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=f"Could not start guest session: {exc}")
 
-    if not result.session:
+    anon_client = get_anon_client()
+    try:
+        verify_result = anon_client.auth.verify_otp(
+            {"token_hash": link_result.properties.hashed_token, "type": "magiclink"}
+        )
+    except Exception as exc:
+        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=f"Could not start guest session: {exc}")
+
+    if not verify_result.session:
         raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail="Could not start guest session.")
 
     return AuthResponse(
-        access_token=result.session.access_token,
-        refresh_token=result.session.refresh_token,
+        access_token=verify_result.session.access_token,
+        refresh_token=verify_result.session.refresh_token,
         user_id=user_id,
         email=GUEST_EMAIL,
     )
