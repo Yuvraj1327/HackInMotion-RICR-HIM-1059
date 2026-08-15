@@ -49,7 +49,15 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins(self) -> List[str]:
-        return [origin.strip() for origin in self.FRONTEND_URL.split(",") if origin.strip()]
+        # Trailing slashes are stripped defensively: browsers NEVER send
+        # a trailing slash in the `Origin` header, but pasting a URL
+        # straight from the address bar (which often does have one) is
+        # an easy mistake to make when setting FRONTEND_URL - and it
+        # silently causes the exact same persistent CORS failure as not
+        # setting the variable at all, since "https://app.com/" and
+        # "https://app.com" are different strings for an exact-match
+        # comparison.
+        return [origin.strip().rstrip("/") for origin in self.FRONTEND_URL.split(",") if origin.strip()]
 
     @property
     def cors_origin_regex(self) -> Optional[str]:
